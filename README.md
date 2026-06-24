@@ -1,134 +1,228 @@
-# GitHub QA Agent
+# AI Defect Intelligence Agent
 
-FastAPI + Gemini powered GitHub commit analysis tool.
+🚀 AI-powered Defect Intelligence Agent that integrates with Jira, analyzes production defects, identifies probable root causes, recommends test coverage, and predicts release risk using Google Gemini and FastAPI.
 
-AI-powered GitHub commit analyzer that automatically reviews the latest code changes in a repository and generates QA-focused test recommendations.
+---
 
 ## Features
 
-* Fetches the latest commit from a GitHub repository
-* Retrieves commit-level code changes and file diffs
-* Uses Google Gemini to analyze code changes
-* Generates:
+### Defect Analysis
 
-  * Feature summary
-  * Change type
-  * Risk level
-  * Impacted modules
-  * Recommended test areas
-  * Recommended test types
+* Fetches open defects directly from Jira
+* Analyzes defect summaries and descriptions
+* Identifies probable root causes
+* Classifies defect severity
+* Generates QA-focused testing recommendations
 
-## Live Demo
+### Release Risk Assessment
 
-https://github-qa-agent-production.up.railway.app/docs
+* Calculates release risk based on open defects
+* Evaluates defect priorities and volume
+* Generates risk score (0-100)
+* Provides Go / No-Go recommendation
+* Suggests actionable release recommendations
+
+### AI-Powered Insights
+
+* Google Gemini 2.5 Flash Integration
+* Intelligent defect analysis
+* Root cause prediction
+* Release decision support
+
+---
+
+## Architecture
+
+Jira → FastAPI → Gemini AI → Defect Intelligence API
+
+---
 
 ## Tech Stack
 
-- Python 3.12
-- FastAPI
-- Google Gemini 2.5 Flash
-- GitHub REST API
-- Railway
+* Python 3.12
+* FastAPI
+* Google Gemini 2.5 Flash
+* Jira REST API
+* LangChain
+* AWS EC2
+* Systemd
 
-## Run Locally
-
-pip install -r requirements.txt
-
-uvicorn app.main:app --reload
+---
 
 ## Project Structure
 
-github-qa-agent/
-│
+ai-defect-intelligence/
+
 ├── app/
-│   ├── __init__.py
+
+│   ├── **init**.py
+
 │   ├── main.py
+
+│   ├── jira_client.py
+
 │   └── agent.py
-│
+
+├── .env
+
 ├── .gitignore
+
 ├── requirements.txt
+
 └── README.md
+
+---
 
 ## Installation
 
-Clone the repository:
+Clone Repository
 
-git clone https://github.com/<your-username>/github-qa-agent.git
+git clone https://github.com/dmishra4/ai-defect-intelligence.git
 
-cd github-qa-agent
+cd ai-defect-intelligence
 
-Create and activate a virtual environment:
+Create Virtual Environment
 
-Windows:
+python3 -m venv venv
 
-python -m venv .venv
+source venv/bin/activate
 
-.venv\Scripts\activate
-
-Install dependencies:
+Install Dependencies
 
 pip install -r requirements.txt
 
+---
+
 ## Environment Variables
 
-Create a `.env` file:
+Create a .env file:
 
 GOOGLE_API_KEY=your_google_api_key
 
-Optional:
+JIRA_URL=https://your-domain.atlassian.net
 
-GITHUB_TOKEN=your_github_token
+JIRA_EMAIL=[your_email@example.com](mailto:your_email@example.com)
+
+JIRA_API_TOKEN=your_jira_api_token
+
+---
 
 ## Run Locally
 
-python -m uvicorn app.main:app --reload --port 8001
+uvicorn app.main:app --reload --port 8002
 
 Open Swagger UI:
 
-http://localhost:8001/docs
+http://localhost:8002/docs
 
-## API Endpoint
+---
 
-POST /analyze
+## API Endpoints
 
-Parameters:
+### Home
 
-* owner (GitHub repository owner)
-* repo (GitHub repository name)
+GET /
+
+Response:
+
+{
+"message": "AI Defect Intelligence Running"
+}
+
+### Get All Open Issues
+
+GET /issues
+
+### Analyze Defect
+
+GET /analyze/{issue_key}
 
 Example:
 
-/analyze?owner=dmishra4&repo=AI-Lab
+/analyze/SCRUM-5
 
-## Sample Response
+### Release Risk Assessment
+
+GET /release-risk
+
+---
+
+## Sample Release Risk Response
 
 {
-"feature": "GitHub Commit Diff Fetcher for AI Processing",
-"change_type": "new_feature",
-"risk_level": "medium",
-"impacted_modules": [
-"GitHub API Integration",
-"Google Gemini API Integration"
+"release_risk": "High",
+"go_no_go": "No Go",
+"risk_score": 82,
+"reasons": [
+"Multiple Highest priority defects remain unresolved"
 ],
-"test_areas": [
-"API validation",
-"Error handling"
-],
-"recommended_test_types": [
-"Functional Testing",
-"Integration Testing"
+"recommendations": [
+"Resolve Highest priority defects before release"
 ]
 }
 
+---
+
+## AWS EC2 Deployment
+
+Install Dependencies
+
+sudo apt update
+
+sudo apt install python3-pip python3-venv git -y
+
+Clone Repository
+
+git clone https://github.com/dmishra4/ai-defect-intelligence.git
+
+cd ai-defect-intelligence
+
+Create Virtual Environment
+
+python3 -m venv venv
+
+source venv/bin/activate
+
+Install Requirements
+
+pip install -r requirements.txt
+
+Create Environment File
+
+nano .env
+
+Run Application
+
+uvicorn app.main:app --host 0.0.0.0 --port 8000
+
+Access Swagger
+
+http://<EC2-IP>:8000/docs
+
+---
+
 ## Future Enhancements
 
-* Analyze pull requests
-* Multi-commit analysis
-* Jira integration
-* Slack notifications
-* Test case generation
-* CI/CD integration
+* Historical defect trend analysis
+* AI-based defect clustering
+* Automated root cause categorization
+* Release quality dashboard
+* Slack integration
+* Microsoft Teams integration
+* Predictive defect leakage analysis
+
+---
+
+## Author
+
+Deepak Kumar
+
+Associate Director |  UBS
+
+
+
+---
 
 ## License
 
-For learning and demonstration purposes.
+For learning, demonstration, and portfolio purposes.
